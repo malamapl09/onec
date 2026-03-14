@@ -1,4 +1,4 @@
-import { groq } from 'astro-sanity'
+const groq = String.raw;
 
 // Site Settings
 export const SITE_SETTINGS_QUERY = groq`

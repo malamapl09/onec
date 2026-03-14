@@ -1,4 +1,7 @@
 ---
+import { fetchSanity, urlFor } from '@lib/sanity'
+import { ALL_TEAM_MEMBERS_QUERY } from '../../../sanity/lib/queries'
+
 interface Member {
   name: string;
   role: string;
@@ -10,9 +13,24 @@ interface Props {
   members?: Member[];
 }
 
-const defaultMembers: Member[] = [];
+// Fetch non-expert team members from Sanity
+let sanityMembers: any[] | null = null;
+try {
+  const allMembers = await fetchSanity<any[]>(ALL_TEAM_MEMBERS_QUERY);
+  if (allMembers?.length) {
+    sanityMembers = allMembers
+      .filter((m: any) => !m.isExpert)
+      .map((m: any) => ({
+        name: m.name,
+        role: m.role || '',
+        bio: m.bio || '',
+        photo: m.photo ? urlFor(m.photo).width(400).height(400).url() : undefined,
+      }));
+  }
+} catch { sanityMembers = null; }
 
-const { members = defaultMembers } = Astro.props;
+const { members: propMembers } = Astro.props;
+const members: Member[] = propMembers?.length ? propMembers : (sanityMembers?.length ? sanityMembers : []);
 ---
 
 <section class="py-16 sm:py-24">

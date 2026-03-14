@@ -5,6 +5,27 @@ import SectionHeading from '@components/ui/SectionHeading.astro'
 import Breadcrumbs from '@components/global/Breadcrumbs.astro'
 import ContactForm from '@components/contact/ContactForm.astro'
 import MapEmbed from '@components/contact/MapEmbed.astro'
+import { fetchSanity } from '@lib/sanity'
+import { SITE_SETTINGS_QUERY } from '../../sanity/lib/queries'
+
+// Hardcoded fallback values
+const fallbackContact = {
+  address: 'Torre Biltmore I, Suite 401, Av. Abraham Lincoln 1003, Piantini, Santo Domingo, República Dominicana',
+  phone: '(809) 683-7229',
+  phoneHref: 'tel:+18096837229',
+  email: 'info@onec.org.do',
+}
+
+// Fetch from Sanity with fallback
+let settings: any = null;
+try { settings = await fetchSanity(SITE_SETTINGS_QUERY); } catch { settings = null; }
+
+const contact = {
+  address: settings?.address || fallbackContact.address,
+  phone: settings?.phone || fallbackContact.phone,
+  phoneHref: settings?.phone ? `tel:${settings.phone.replace(/[^+\d]/g, '')}` : fallbackContact.phoneHref,
+  email: settings?.email || fallbackContact.email,
+}
 ---
 
 <PageLayout
@@ -35,15 +56,15 @@ import MapEmbed from '@components/contact/MapEmbed.astro'
             <div class="space-y-4 text-charcoal-600">
               <div class="flex gap-3">
                 <span class="text-onec-red font-bold">Dirección:</span>
-                <span>Torre Biltmore I, Suite 401, Av. Abraham Lincoln 1003, Piantini, Santo Domingo, República Dominicana</span>
+                <span>{contact.address}</span>
               </div>
               <div class="flex gap-3">
                 <span class="text-onec-red font-bold">Teléfono:</span>
-                <a href="tel:+18096837229" class="hover:text-onec-red transition-colors">(809) 683-7229</a>
+                <a href={contact.phoneHref} class="hover:text-onec-red transition-colors">{contact.phone}</a>
               </div>
               <div class="flex gap-3">
                 <span class="text-onec-red font-bold">Email:</span>
-                <a href="mailto:info@onec.org.do" class="hover:text-onec-red transition-colors">info@onec.org.do</a>
+                <a href={`mailto:${contact.email}`} class="hover:text-onec-red transition-colors">{contact.email}</a>
               </div>
             </div>
           </div>

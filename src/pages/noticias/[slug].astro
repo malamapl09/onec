@@ -6,15 +6,15 @@ import Container from '@components/ui/Container.astro'
 import Breadcrumbs from '@components/global/Breadcrumbs.astro'
 import ArticleContent from '@components/news/ArticleContent.astro'
 
-// Placeholder - will be replaced with Sanity queries
-export function getStaticPaths() {
-  const articles = [
+export async function getStaticPaths() {
+  const hardcodedArticles = [
     {
       slug: 'onec-mesa-dialogo-reforma-fiscal',
       title: 'ONEC participa en mesa de diálogo sobre reforma fiscal',
       publishedAt: '2026-03-01',
       category: 'Institucional',
       body: 'Representantes de ONEC participaron en la mesa de diálogo convocada por el Ministerio de Hacienda para discutir la propuesta de reforma fiscal. Durante la sesión, se presentaron las preocupaciones del sector comercial sobre el impacto de las medidas propuestas en los costos operativos de las empresas.\n\nLa delegación de ONEC, encabezada por su director ejecutivo, presentó propuestas alternativas que buscan equilibrar la necesidad de recaudación con la competitividad del sector comercial dominicano.\n\nEntre los puntos discutidos se encuentran la revisión de los impuestos al consumo, la simplificación de los procesos tributarios y la creación de incentivos para la formalización de pequeños comercios.',
+      fromSanity: false,
     },
     {
       slug: 'jornada-vinculacion-ter-2026',
@@ -22,6 +22,7 @@ export function getStaticPaths() {
       publishedAt: '2026-02-15',
       category: 'Eventos',
       body: 'Más de 50 empresas participaron en la jornada de vinculación comercial TER 2026, generando nuevas oportunidades de negocio entre proveedores y comercios.\n\nEl evento, organizado por ONEC en colaboración con las principales cámaras de comercio del país, reunió a representantes de diversos sectores del comercio dominicano.\n\nDurante la jornada se realizaron más de 200 reuniones de negocios, fortaleciendo las relaciones comerciales entre los participantes.',
+      fromSanity: false,
     },
     {
       slug: 'regulaciones-comercio-electronico-rd',
@@ -29,6 +30,7 @@ export function getStaticPaths() {
       publishedAt: '2026-02-01',
       category: 'Legislación',
       body: 'El gobierno dominicano aprobó nuevas regulaciones para el comercio electrónico que impactarán a las empresas del sector retail.\n\nLas nuevas disposiciones establecen requisitos de transparencia en precios, políticas de devolución y protección de datos del consumidor para las plataformas de venta en línea.\n\nONEC ha participado activamente en la revisión de estas regulaciones, asegurando que los intereses del comercio organizado sean tomados en cuenta.',
+      fromSanity: false,
     },
     {
       slug: 'programa-capacitacion-2026',
@@ -36,6 +38,7 @@ export function getStaticPaths() {
       publishedAt: '2026-01-20',
       category: 'Institucional',
       body: 'ONEC anuncia su programa de capacitación para el primer semestre de 2026, con talleres en finanzas, marketing digital y recursos humanos.\n\nEl programa está diseñado para fortalecer las competencias de los equipos directivos y operativos de las empresas miembro.\n\nLos talleres serán impartidos por expertos nacionales e internacionales, con un enfoque práctico orientado a las necesidades del comercio dominicano.',
+      fromSanity: false,
     },
     {
       slug: 'impacto-inflacion-sector-comercial',
@@ -43,6 +46,7 @@ export function getStaticPaths() {
       publishedAt: '2026-01-10',
       category: 'Sector Comercial',
       body: 'Nuestro equipo de expertos analiza el impacto de la inflación en los costos operativos del comercio dominicano y propone estrategias de mitigación.\n\nEl estudio revela que los costos de operación han aumentado significativamente en el último año, afectando especialmente a las pequeñas y medianas empresas del sector.\n\nONEC recomienda una serie de medidas que incluyen la optimización de cadenas de suministro, la negociación colectiva con proveedores y la adopción de tecnologías que reduzcan costos.',
+      fromSanity: false,
     },
     {
       slug: 'acuerdo-infotep-capacitacion',
@@ -50,13 +54,35 @@ export function getStaticPaths() {
       publishedAt: '2025-12-15',
       category: 'Institucional',
       body: 'Nuevo convenio permitirá a los empleados de empresas miembro acceder a programas de formación técnica y profesional.\n\nEl acuerdo entre ONEC e INFOTEP establece un marco de colaboración para el desarrollo de programas de capacitación adaptados a las necesidades del sector comercial.\n\nLos programas incluirán formación en áreas como servicio al cliente, gestión de inventarios, comercio digital y habilidades gerenciales.',
+      fromSanity: false,
     },
-  ]
+  ];
 
-  return articles.map((article) => ({
+  let sanityArticles: any[] = [];
+  try {
+    const { fetchSanity } = await import('../../lib/sanity');
+    const result = await fetchSanity<any[]>('*[_type == "article"] { _id, title, "slug": slug.current, body, excerpt, publishedAt, "category": category->title }');
+    if (result?.length) {
+      sanityArticles = result.map((a: any) => ({
+        slug: a.slug,
+        title: a.title,
+        publishedAt: a.publishedAt || '',
+        category: a.category || '',
+        body: a.body,
+        fromSanity: true,
+      }));
+    }
+  } catch { /* Sanity unavailable, use hardcoded only */ }
+
+  // Merge: Sanity articles override hardcoded ones with same slug
+  const slugMap = new Map<string, any>();
+  for (const a of hardcodedArticles) slugMap.set(a.slug, a);
+  for (const a of sanityArticles) slugMap.set(a.slug, a);
+
+  return [...slugMap.values()].map((article) => ({
     params: { slug: article.slug },
     props: { article },
-  }))
+  }));
 }
 
 interface Props {
@@ -64,7 +90,8 @@ interface Props {
     title: string
     publishedAt: string
     category?: string
-    body: string
+    body: any
+    fromSanity?: boolean
   }
 }
 
@@ -73,7 +100,7 @@ const { article } = Astro.props
 
 <BaseLayout
   title={article.title}
-  description={article.body.slice(0, 160)}
+  description={typeof article.body === 'string' ? article.body.slice(0, 160) : (Array.isArray(article.body) ? article.body.map((b: any) => b.children?.map((c: any) => c.text).join('')).join(' ').slice(0, 160) : '')}
   article={true}
   publishedAt={article.publishedAt}
 >
@@ -98,9 +125,15 @@ const { article } = Astro.props
             category={article.category}
           />
           <div class="prose prose-lg max-w-none mt-8">
-            {article.body.split('\n\n').map((paragraph) => (
-              <p>{paragraph}</p>
-            ))}
+            {article.fromSanity && Array.isArray(article.body) ? (
+              article.body.map((block: any) => (
+                <p>{block.children?.map((c: any) => c.text).join('') || ''}</p>
+              ))
+            ) : (
+              typeof article.body === 'string' && article.body.split('\n\n').map((paragraph: string) => (
+                <p>{paragraph}</p>
+              ))
+            )}
           </div>
         </div>
       </Container>

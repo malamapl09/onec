@@ -6,16 +6,18 @@ import Breadcrumbs from '@components/global/Breadcrumbs.astro'
 import ArticleCard from '@components/news/ArticleCard.astro'
 import CategoryFilter from '@components/news/CategoryFilter.astro'
 import Pagination from '@components/news/Pagination.astro'
+import { fetchSanity, urlFor } from '@lib/sanity'
+import { ALL_ARTICLES_QUERY, ALL_CATEGORIES_QUERY } from '../../../sanity/lib/queries'
 
-// Placeholder data - will be replaced with Sanity queries
-const categories = [
+// Hardcoded fallbacks
+const fallbackCategories = [
   { title: 'Institucional', slug: 'institucional' },
   { title: 'Eventos', slug: 'eventos' },
   { title: 'Sector Comercial', slug: 'sector-comercial' },
   { title: 'Legislación', slug: 'legislacion' },
 ]
 
-const articles = [
+const fallbackArticles = [
   {
     title: 'ONEC participa en mesa de diálogo sobre reforma fiscal',
     excerpt: 'Representantes de ONEC participaron en la mesa de diálogo convocada por el Ministerio de Hacienda para discutir la propuesta de reforma fiscal.',
@@ -59,6 +61,31 @@ const articles = [
     category: 'Institucional',
   },
 ]
+
+// Fetch from Sanity with fallback
+let sanityArticles: any[] | null = null;
+let sanityCategories: any[] | null = null;
+try {
+  sanityArticles = await fetchSanity(ALL_ARTICLES_QUERY);
+} catch { sanityArticles = null; }
+try {
+  sanityCategories = await fetchSanity(ALL_CATEGORIES_QUERY);
+} catch { sanityCategories = null; }
+
+const categories = sanityCategories?.length
+  ? sanityCategories.map((c: any) => ({ title: c.title, slug: c.slug?.current || c.slug }))
+  : fallbackCategories;
+
+const articles = sanityArticles?.length
+  ? sanityArticles.map((a: any) => ({
+      title: a.title,
+      excerpt: a.excerpt || '',
+      slug: a.slug?.current || a.slug,
+      date: a.publishedAt || '',
+      category: a.categoryTitle || '',
+      image: a.coverImage ? urlFor(a.coverImage).width(600).height(338).url() : undefined,
+    }))
+  : fallbackArticles;
 
 const activeCategory = Astro.url.searchParams.get('categoria') || undefined
 const currentPage = 1

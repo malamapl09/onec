@@ -4,8 +4,10 @@ import Container from '@components/ui/Container.astro'
 import SectionHeading from '@components/ui/SectionHeading.astro'
 import Breadcrumbs from '@components/global/Breadcrumbs.astro'
 import CommitteeCard from '@components/committees/CommitteeCard.astro'
+import { fetchSanity, urlFor } from '@lib/sanity'
+import { ALL_COMMITTEES_QUERY } from '../../sanity/lib/queries'
 
-const committees = [
+const fallbackCommittees = [
   {
     name: 'Comité Académico y de Eventos',
     description: 'Organiza y coordina actividades académicas, foros, seminarios y eventos que fortalecen las competencias del sector comercial dominicano.',
@@ -37,6 +39,18 @@ const committees = [
     image: '/images/comites/Tecnología.png',
   },
 ]
+
+// Fetch from Sanity with fallback
+let sanityCommittees: any[] | null = null;
+try { sanityCommittees = await fetchSanity(ALL_COMMITTEES_QUERY); } catch { sanityCommittees = null; }
+
+const committees = sanityCommittees?.length
+  ? sanityCommittees.map((c: any) => ({
+      name: c.name,
+      description: c.description || '',
+      image: c.coverImage ? urlFor(c.coverImage).width(400).height(400).url() : '/images/comites/placeholder.png',
+    }))
+  : fallbackCommittees;
 ---
 
 <PageLayout

@@ -7,8 +7,10 @@ import ServiceCard from '@components/services/ServiceCard.astro'
 import InitiativeCard from '@components/services/InitiativeCard.astro'
 import ExpertProfile from '@components/services/ExpertProfile.astro'
 import JoinCTA from '@components/home/JoinCTA.astro'
+import { fetchSanity, urlFor } from '@lib/sanity'
+import { ALL_SERVICES_QUERY, ALL_INITIATIVES_QUERY, EXPERT_MEMBERS_QUERY } from '../../sanity/lib/queries'
 
-const services = [
+const fallbackServices = [
   { title: 'Representación Gremial', description: 'Defendemos los intereses del comercio organizado ante el gobierno, congreso y organismos reguladores. Participamos activamente en la formulación de políticas públicas que impactan al sector.', icon: '🏛️' },
   { title: 'Asesoría Legal', description: 'Equipo de abogados especializados en legislación comercial, laboral y tributaria dominicana. Orientación permanente para el cumplimiento normativo de tu empresa.', icon: '⚖️' },
   { title: 'Asesoría Fiscal', description: 'Expertos en materia impositiva que te ayudan a optimizar la carga tributaria de tu empresa dentro del marco legal vigente.', icon: '📊' },
@@ -17,7 +19,7 @@ const services = [
   { title: 'Formalización de Suplidores', description: 'Programa de acompañamiento para la formalización y certificación de proveedores del sector comercial dominicano.', icon: '✅' },
 ]
 
-const initiatives = [
+const fallbackInitiatives = [
   {
     title: 'Plataforma de Talento en el Retail (TER)',
     description: 'En 2023, fue creada la Plataforma de Talento en el Retail (TER): un espacio especializado dirigido a los actores de Gestión Humana del sector detallista formal. Se realizan seminarios, congresos, talleres, encuentros y ferias para captación de talentos.',
@@ -50,7 +52,7 @@ const initiatives = [
   },
 ]
 
-const experts = [
+const fallbackExperts = [
   {
     name: 'Alexis Hernández',
     role: 'CEO de Platinum Consulting',
@@ -87,6 +89,41 @@ const experts = [
     photo: '/images/expertos/Meiny-González.png'
   },
 ]
+
+// Fetch from Sanity with fallbacks
+let sanityServices: any[] | null = null;
+let sanityInitiatives: any[] | null = null;
+let sanityExperts: any[] | null = null;
+try { sanityServices = await fetchSanity(ALL_SERVICES_QUERY); } catch { sanityServices = null; }
+try { sanityInitiatives = await fetchSanity(ALL_INITIATIVES_QUERY); } catch { sanityInitiatives = null; }
+try { sanityExperts = await fetchSanity(EXPERT_MEMBERS_QUERY); } catch { sanityExperts = null; }
+
+const services = sanityServices?.length
+  ? sanityServices.map((s: any) => ({
+      title: s.title,
+      description: s.description || '',
+      icon: s.icon || '',
+    }))
+  : fallbackServices;
+
+const initiatives = sanityInitiatives?.length
+  ? sanityInitiatives.map((i: any) => ({
+      title: i.title,
+      description: i.description || '',
+      image: i.coverImage ? urlFor(i.coverImage).width(600).height(338).url() : '/images/logros/placeholder.png',
+      stats: i.impactStats || [],
+    }))
+  : fallbackInitiatives;
+
+const experts = sanityExperts?.length
+  ? sanityExperts.map((e: any) => ({
+      name: e.name,
+      role: e.role || '',
+      area: e.expertiseArea || '',
+      bio: e.bio || '',
+      photo: e.photo ? urlFor(e.photo).width(400).height(400).url() : undefined,
+    }))
+  : fallbackExperts;
 ---
 
 <PageLayout

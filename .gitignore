@@ -31,3 +31,5 @@ pnpm-debug.log*
 
 # source assets (not part of build)
 onec-assets/
+.vercel
+.env*.local
