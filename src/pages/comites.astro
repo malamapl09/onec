@@ -1,0 +1,69 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+import CommitteeCard from '@components/committees/CommitteeCard.astro'
+
+const committees = [
+  {
+    name: 'Comité Académico y de Eventos',
+    description: 'Organiza y coordina actividades académicas, foros, seminarios y eventos que fortalecen las competencias del sector comercial dominicano.',
+    image: '/images/comites/Académico.png',
+  },
+  {
+    name: 'Comité Económico y Fiscal',
+    description: 'Analiza y da seguimiento a las políticas económicas y fiscales que impactan al sector comercial, proponiendo posiciones institucionales ante los organismos correspondientes.',
+    image: '/images/comites/Económico.png',
+  },
+  {
+    name: 'Comité Legal y Laboral',
+    description: 'Monitorea y analiza las legislaciones y regulaciones laborales y comerciales, asesorando a los miembros en cumplimiento normativo y mejores prácticas.',
+    image: '/images/comites/Legal y laboral.png',
+  },
+  {
+    name: 'Comité de Logística',
+    description: 'Trabaja en la optimización de la cadena de suministro y logística del sector comercial, promoviendo eficiencia y reducción de costos operativos.',
+    image: '/images/comites/Logística.png',
+  },
+  {
+    name: 'Subcomité de Permisología',
+    description: 'Se enfoca en los procesos de permisos y licencias que afectan a las empresas comerciales, buscando la simplificación y agilización de trámites.',
+    image: '/images/comites/Permisología.png',
+  },
+  {
+    name: 'Comité de Tecnología y Ciberseguridad',
+    description: 'Impulsa la transformación digital y la adopción de tecnología en el comercio dominicano, con énfasis en ciberseguridad y protección de datos.',
+    image: '/images/comites/Tecnología.png',
+  },
+]
+---
+
+<PageLayout
+  title="Comités"
+  description="Conoce los comités de trabajo de ONEC que abordan los temas clave del sector comercial dominicano."
+>
+  <section class="pt-8 pb-4">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Comités' }]} />
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading
+        title="Comités de Trabajo"
+        subtitle="Grupos especializados que abordan los temas más importantes para el sector comercial"
+      />
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {committees.map((committee) => (
+          <CommitteeCard
+            name={committee.name}
+            description={committee.description}
+            image={committee.image}
+          />
+        ))}
+      </div>
+    </Container>
+  </section>
+</PageLayout>

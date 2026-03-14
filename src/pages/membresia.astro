@@ -1,0 +1,69 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+import BenefitsGrid from '@components/membership/BenefitsGrid.astro'
+import SectorCards from '@components/membership/SectorCards.astro'
+import HowToJoin from '@components/membership/HowToJoin.astro'
+import MemberDirectory from '@components/membership/MemberDirectory.astro'
+import JoinCTA from '@components/home/JoinCTA.astro'
+---
+
+<PageLayout
+  title="Membresía"
+  description="Hazte miembro de ONEC y accede a representación gremial, asesoría especializada, capacitación y vinculación comercial para tu empresa."
+>
+  <section class="pt-8 pb-4">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Membresía' }]} />
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading
+        title="Beneficios de Ser Miembro"
+        subtitle="Accede a servicios exclusivos que fortalecerán tu empresa"
+      />
+      <div class="mt-12">
+        <BenefitsGrid />
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-16 bg-white">
+    <Container>
+      <SectionHeading
+        title="Sectores que Representamos"
+        subtitle="Abarcamos los principales sectores del comercio dominicano"
+      />
+      <div class="mt-12">
+        <SectorCards />
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading title="¿Cómo Hacerse Miembro?" />
+      <div class="mt-12">
+        <HowToJoin />
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-16 bg-white">
+    <Container>
+      <SectionHeading
+        title="Directorio de Miembros"
+        subtitle="Empresas que forman parte de ONEC"
+      />
+      <div class="mt-12">
+        <MemberDirectory />
+      </div>
+    </Container>
+  </section>
+
+  <JoinCTA />
+</PageLayout>

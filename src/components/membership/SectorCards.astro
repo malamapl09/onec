@@ -1,0 +1,43 @@
+---
+const sectors = [
+  {
+    name: 'Supermercados',
+    description: 'Cadenas y establecimientos de venta de alimentos y productos de consumo masivo.',
+  },
+  {
+    name: 'Farmacias',
+    description: 'Cadenas farmacéuticas y establecimientos de productos de salud y bienestar.',
+  },
+  {
+    name: 'Tiendas por Departamento',
+    description: 'Grandes superficies y tiendas multidepartamento con variedad de productos.',
+  },
+  {
+    name: 'Ferreterías',
+    description: 'Establecimientos especializados en materiales de construcción y herramientas.',
+  },
+  {
+    name: 'Electrodomésticos',
+    description: 'Tiendas de equipos electrónicos y electrodomésticos para el hogar.',
+  },
+  {
+    name: 'Comercio General',
+    description: 'Empresas del sector comercial con operaciones diversificadas.',
+  },
+  {
+    name: 'Otros',
+    description: 'Sectores complementarios al comercio organizado dominicano.',
+  },
+];
+---
+
+<div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {sectors.map((sector) => (
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition">
+          <h3 class="font-heading font-semibold text-charcoal-950">{sector.name}</h3>
+          <p class="text-charcoal-600 text-sm mt-2">{sector.description}</p>
+        </div>
+      ))}
+    </div>
+</div>

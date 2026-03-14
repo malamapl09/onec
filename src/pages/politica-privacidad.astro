@@ -1,0 +1,57 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Container from '@components/ui/Container.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+---
+
+<PageLayout
+  title="Política de Privacidad"
+  description="Política de privacidad de ONEC. Conoce cómo protegemos tus datos personales."
+>
+  <section class="pt-8 pb-4">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Política de Privacidad' }]} />
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <div class="max-w-4xl mx-auto prose prose-lg">
+        <h1 class="font-heading font-bold text-3xl md:text-4xl text-charcoal-950">Política de Privacidad</h1>
+        <p class="text-charcoal-600 mt-2">Última actualización: marzo 2026</p>
+
+        <h2>1. Información que Recopilamos</h2>
+        <p>En ONEC (Organización Nacional de Empresas Comerciales, Inc.) recopilamos información que usted nos proporciona directamente a través de nuestro formulario de contacto, incluyendo:</p>
+        <ul>
+          <li>Nombre completo</li>
+          <li>Dirección de correo electrónico</li>
+          <li>Número de teléfono</li>
+          <li>Nombre de su empresa</li>
+          <li>El contenido de su mensaje</li>
+        </ul>
+
+        <h2>2. Uso de la Información</h2>
+        <p>La información recopilada se utiliza exclusivamente para:</p>
+        <ul>
+          <li>Responder a sus consultas y solicitudes</li>
+          <li>Proporcionar información sobre nuestros servicios y membresía</li>
+          <li>Enviar comunicaciones relacionadas con las actividades de ONEC</li>
+        </ul>
+
+        <h2>3. Protección de Datos</h2>
+        <p>Implementamos medidas de seguridad apropiadas para proteger su información personal contra acceso no autorizado, alteración, divulgación o destrucción.</p>
+
+        <h2>4. Compartir Información</h2>
+        <p>No vendemos, comercializamos ni transferimos su información personal a terceros sin su consentimiento, excepto cuando sea requerido por ley.</p>
+
+        <h2>5. Contacto</h2>
+        <p>Si tiene preguntas sobre esta política de privacidad, puede contactarnos en:</p>
+        <ul>
+          <li>Email: <a href="mailto:info@onec.org.do">info@onec.org.do</a></li>
+          <li>Teléfono: <a href="tel:+18096837229">(809) 683-7229</a></li>
+          <li>Dirección: Torre Biltmore I, Suite 401, Av. Abraham Lincoln 1003, Piantini, Santo Domingo</li>
+        </ul>
+      </div>
+    </Container>
+  </section>
+</PageLayout>

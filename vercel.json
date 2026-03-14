@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { "source": "/sobre-onec-2/", "destination": "/nosotros", "statusCode": 308 },
+    { "source": "/actividades-eventos/", "destination": "/noticias", "statusCode": 308 },
+    { "source": "/miembros/", "destination": "/membresia", "statusCode": 308 },
+    { "source": "/publicaciones-2/", "destination": "/servicios", "statusCode": 308 },
+    { "source": "/contacto-2/", "destination": "/contacto", "statusCode": 308 }
+  ]
+}

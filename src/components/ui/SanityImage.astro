@@ -1,0 +1,23 @@
+---
+import { urlFor } from '@lib/sanity';
+
+interface Props {
+  source: any;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+}
+
+const { source, alt, width, height, class: className } = Astro.props;
+
+if (!source) return;
+
+let imageBuilder = urlFor(source);
+if (width) imageBuilder = imageBuilder.width(width);
+if (height) imageBuilder = imageBuilder.height(height);
+
+const url = imageBuilder.url();
+---
+
+<img src={url} alt={alt} width={width} height={height} loading="lazy" decoding="async" class={className} />

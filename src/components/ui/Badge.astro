@@ -1,0 +1,19 @@
+---
+interface Props {
+  variant?: 'red' | 'gray';
+  class?: string;
+}
+
+const { variant = 'red', class: className } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+  red: 'bg-onec-red-light text-onec-red',
+  gray: 'bg-charcoal-100 text-charcoal-600',
+};
+
+const classes = ['text-xs font-semibold px-3 py-1 rounded-full inline-block', variantClasses[variant], className].filter(Boolean).join(' ');
+---
+
+<span class={classes}>
+  <slot />
+</span>

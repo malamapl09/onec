@@ -1,0 +1,56 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+import Timeline from '@components/about/Timeline.astro'
+import MissionVision from '@components/about/MissionVision.astro'
+import LeadershipGrid from '@components/about/LeadershipGrid.astro'
+import JoinCTA from '@components/home/JoinCTA.astro'
+---
+
+<PageLayout
+  title="Nosotros"
+  description="Conoce la historia, misión y equipo de ONEC, la organización que representa al comercio dominicano desde 1997."
+>
+  <section class="pt-8 pb-4">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Nosotros' }]} />
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading
+        title="Nuestra Historia"
+        subtitle="Más de dos décadas representando al comercio organizado de la República Dominicana"
+      />
+      <div class="mt-16">
+        <Timeline />
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-16 bg-white">
+    <Container>
+      <SectionHeading title="Misión, Visión y Valores" />
+      <div class="mt-12">
+        <MissionVision />
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading
+        title="Nuestro Equipo"
+        subtitle="Profesionales comprometidos con el desarrollo del comercio dominicano"
+      />
+      <div class="mt-12">
+        <LeadershipGrid />
+      </div>
+    </Container>
+  </section>
+
+  <JoinCTA />
+</PageLayout>

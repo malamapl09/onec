@@ -1,0 +1,49 @@
+---
+const steps = [
+  {
+    number: 1,
+    title: 'Contacta',
+    description: 'Completa el formulario de contacto o llámanos al (809) 683-7229.',
+  },
+  {
+    number: 2,
+    title: 'Evaluación',
+    description: 'Nuestro equipo evaluará tu solicitud y te contactará para los detalles.',
+  },
+  {
+    number: 3,
+    title: 'Bienvenido',
+    description: '¡Forma parte de la comunidad ONEC y comienza a disfrutar los beneficios!',
+  },
+];
+---
+
+<div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      <!-- Connecting line on desktop -->
+      <div class="hidden md:block absolute top-6 left-[calc(16.67%+1.5rem)] right-[calc(16.67%+1.5rem)] h-0.5 bg-charcoal-200"></div>
+
+      {steps.map((step) => (
+        <div class="relative text-center">
+          <div class="w-12 h-12 bg-onec-red text-white rounded-full font-bold text-lg flex items-center justify-center mx-auto relative z-10">
+            {step.number}
+          </div>
+
+          <h3 class="font-heading font-bold text-lg text-charcoal-950 mt-4">{step.title}</h3>
+          <p class="text-charcoal-600 text-sm mt-2 max-w-xs mx-auto">{step.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 text-center">
+      <a
+        href="/contacto"
+        class="inline-flex items-center justify-center bg-onec-red text-white font-semibold rounded-lg px-8 py-3.5 text-base hover:bg-onec-red-dark transition-colors focus-visible:ring-2 focus-visible:ring-onec-red focus-visible:ring-offset-2"
+      >
+        Solicitar Membresía
+      </a>
+      <p class="text-charcoal-500 text-sm mt-3">
+        O llámanos directamente al <a href="tel:+18096837229" class="text-onec-red hover:underline font-medium">(809) 683-7229</a>
+      </p>
+    </div>
+</div>

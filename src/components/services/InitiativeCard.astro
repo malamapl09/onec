@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  stats?: Array<{ label: string; value: string }>;
+}
+
+const { title, description, image, stats } = Astro.props;
+---
+
+<div class="bg-white rounded-xl overflow-hidden shadow-sm">
+  <!-- Initiative image -->
+  <img src={image} alt={title} class="w-full aspect-video object-cover" loading="lazy" width="600" height="338" decoding="async" />
+
+  <!-- Content -->
+  <div class="p-6">
+    <h3 class="font-heading font-bold text-xl text-charcoal-950">
+      {title}
+    </h3>
+
+    <p class="text-charcoal-600 mt-3">
+      {description}
+    </p>
+
+    <!-- Stats row -->
+    {stats && stats.length > 0 && (
+      <div class="flex gap-4 mt-5 pt-5 border-t border-charcoal-100">
+        {stats.map((stat) => (
+          <div class="text-center flex-1">
+            <p class="font-bold text-onec-red text-lg">{stat.value}</p>
+            <p class="text-xs text-charcoal-600">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>

@@ -1,0 +1,79 @@
+---
+interface Props {
+  navLinks: Array<{ label: string; href: string }>;
+  pathname: string;
+}
+
+const { navLinks, pathname } = Astro.props;
+
+function isActive(href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+---
+
+<div id="mobile-menu" role="navigation" aria-label="Menú móvil" aria-hidden="true" class="hidden lg:hidden bg-white border-t border-charcoal-100">
+  <div class="px-4 py-2">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'block py-3 border-b border-charcoal-100 text-sm font-medium transition-colors',
+          isActive(link.href)
+            ? 'text-onec-red font-semibold'
+            : 'text-charcoal-600 hover:text-onec-red',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+    <div class="py-4">
+      <a
+        href="/membresia"
+        class="block w-full text-center bg-onec-red text-white rounded-lg px-5 py-2.5 text-sm font-semibold hover:bg-onec-red-dark transition-colors"
+      >
+        Hazte Miembro
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  function toggleMenu() {
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    mobileMenu?.classList.toggle('hidden');
+    hamburgerIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+    hamburger?.setAttribute('aria-expanded', String(!isOpen));
+    mobileMenu?.setAttribute('aria-hidden', String(isOpen));
+    if (isOpen) {
+      hamburger?.focus();
+    }
+  }
+
+  hamburger?.addEventListener('click', toggleMenu);
+
+  // Close on link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      hamburgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
+      hamburger?.focus();
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+      toggleMenu();
+    }
+  });
+</script>

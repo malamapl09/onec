@@ -1,0 +1,67 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+import ContactForm from '@components/contact/ContactForm.astro'
+import MapEmbed from '@components/contact/MapEmbed.astro'
+---
+
+<PageLayout
+  title="Contacto"
+  description="Contáctanos para más información sobre ONEC, membresía y servicios. Estamos ubicados en Torre Biltmore I, Santo Domingo."
+>
+  <section class="pt-8 pb-4">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Contacto' }]} />
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading
+        title="Contáctanos"
+        subtitle="Estamos aquí para ayudarte. Escríbenos o visítanos en nuestras oficinas."
+      />
+
+      <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div>
+          <ContactForm />
+        </div>
+
+        <div class="space-y-8">
+          <div>
+            <h3 class="font-heading font-bold text-xl text-charcoal-950 mb-4">Información de Contacto</h3>
+            <div class="space-y-4 text-charcoal-600">
+              <div class="flex gap-3">
+                <span class="text-onec-red font-bold">Dirección:</span>
+                <span>Torre Biltmore I, Suite 401, Av. Abraham Lincoln 1003, Piantini, Santo Domingo, República Dominicana</span>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-onec-red font-bold">Teléfono:</span>
+                <a href="tel:+18096837229" class="hover:text-onec-red transition-colors">(809) 683-7229</a>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-onec-red font-bold">Email:</span>
+                <a href="mailto:info@onec.org.do" class="hover:text-onec-red transition-colors">info@onec.org.do</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-heading font-bold text-xl text-charcoal-950 mb-4">Horario de Oficina</h3>
+            <div class="space-y-2 text-charcoal-600">
+              <p>Lunes a Viernes: 8:00 AM - 5:00 PM</p>
+              <p>Sábados y Domingos: Cerrado</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-heading font-bold text-xl text-charcoal-950 mb-4">Ubicación</h3>
+            <MapEmbed />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</PageLayout>

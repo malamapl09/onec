@@ -1,0 +1,23 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Hero from '@components/home/Hero.astro'
+import StatsBar from '@components/home/StatsBar.astro'
+import ServicesOverview from '@components/home/ServicesOverview.astro'
+import AboutSnippet from '@components/home/AboutSnippet.astro'
+import MemberLogos from '@components/home/MemberLogos.astro'
+import LatestNews from '@components/home/LatestNews.astro'
+import JoinCTA from '@components/home/JoinCTA.astro'
+---
+
+<PageLayout
+  title="Representamos al Comercio Dominicano"
+  description="ONEC es la organización que representa y defiende los intereses del comercio organizado de la República Dominicana desde 1997. Servicios, capacitación y representación gremial."
+>
+  <Hero />
+  <StatsBar />
+  <ServicesOverview />
+  <AboutSnippet />
+  <MemberLogos />
+  <LatestNews />
+  <JoinCTA />
+</PageLayout>

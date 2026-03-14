@@ -1,0 +1,27 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  image: string;
+}
+
+const { name, description, image } = Astro.props;
+---
+
+<div class="bg-white rounded-xl overflow-hidden shadow-sm">
+  <!-- Committee image with gradient overlay -->
+  <div class="relative aspect-square">
+    <img src={image} alt={name} class="w-full h-full object-cover" loading="lazy" width="400" height="400" decoding="async" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+    <h3 class="absolute bottom-4 left-4 right-4 font-heading font-bold text-xl text-white">
+      {name}
+    </h3>
+  </div>
+
+  <!-- Description -->
+  <div class="p-6">
+    <p class="text-charcoal-600">
+      {description}
+    </p>
+  </div>
+</div>

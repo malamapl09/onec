@@ -1,0 +1,110 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro'
+import Header from '@components/global/Header.astro'
+import Footer from '@components/global/Footer.astro'
+import Container from '@components/ui/Container.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+import ArticleContent from '@components/news/ArticleContent.astro'
+
+// Placeholder - will be replaced with Sanity queries
+export function getStaticPaths() {
+  const articles = [
+    {
+      slug: 'onec-mesa-dialogo-reforma-fiscal',
+      title: 'ONEC participa en mesa de diálogo sobre reforma fiscal',
+      publishedAt: '2026-03-01',
+      category: 'Institucional',
+      body: 'Representantes de ONEC participaron en la mesa de diálogo convocada por el Ministerio de Hacienda para discutir la propuesta de reforma fiscal. Durante la sesión, se presentaron las preocupaciones del sector comercial sobre el impacto de las medidas propuestas en los costos operativos de las empresas.\n\nLa delegación de ONEC, encabezada por su director ejecutivo, presentó propuestas alternativas que buscan equilibrar la necesidad de recaudación con la competitividad del sector comercial dominicano.\n\nEntre los puntos discutidos se encuentran la revisión de los impuestos al consumo, la simplificación de los procesos tributarios y la creación de incentivos para la formalización de pequeños comercios.',
+    },
+    {
+      slug: 'jornada-vinculacion-ter-2026',
+      title: 'Exitosa jornada de vinculación comercial TER 2026',
+      publishedAt: '2026-02-15',
+      category: 'Eventos',
+      body: 'Más de 50 empresas participaron en la jornada de vinculación comercial TER 2026, generando nuevas oportunidades de negocio entre proveedores y comercios.\n\nEl evento, organizado por ONEC en colaboración con las principales cámaras de comercio del país, reunió a representantes de diversos sectores del comercio dominicano.\n\nDurante la jornada se realizaron más de 200 reuniones de negocios, fortaleciendo las relaciones comerciales entre los participantes.',
+    },
+    {
+      slug: 'regulaciones-comercio-electronico-rd',
+      title: 'Nuevas regulaciones para el comercio electrónico en RD',
+      publishedAt: '2026-02-01',
+      category: 'Legislación',
+      body: 'El gobierno dominicano aprobó nuevas regulaciones para el comercio electrónico que impactarán a las empresas del sector retail.\n\nLas nuevas disposiciones establecen requisitos de transparencia en precios, políticas de devolución y protección de datos del consumidor para las plataformas de venta en línea.\n\nONEC ha participado activamente en la revisión de estas regulaciones, asegurando que los intereses del comercio organizado sean tomados en cuenta.',
+    },
+    {
+      slug: 'programa-capacitacion-2026',
+      title: 'Programa de capacitación en gestión empresarial 2026',
+      publishedAt: '2026-01-20',
+      category: 'Institucional',
+      body: 'ONEC anuncia su programa de capacitación para el primer semestre de 2026, con talleres en finanzas, marketing digital y recursos humanos.\n\nEl programa está diseñado para fortalecer las competencias de los equipos directivos y operativos de las empresas miembro.\n\nLos talleres serán impartidos por expertos nacionales e internacionales, con un enfoque práctico orientado a las necesidades del comercio dominicano.',
+    },
+    {
+      slug: 'impacto-inflacion-sector-comercial',
+      title: 'Análisis del impacto de la inflación en el sector comercial',
+      publishedAt: '2026-01-10',
+      category: 'Sector Comercial',
+      body: 'Nuestro equipo de expertos analiza el impacto de la inflación en los costos operativos del comercio dominicano y propone estrategias de mitigación.\n\nEl estudio revela que los costos de operación han aumentado significativamente en el último año, afectando especialmente a las pequeñas y medianas empresas del sector.\n\nONEC recomienda una serie de medidas que incluyen la optimización de cadenas de suministro, la negociación colectiva con proveedores y la adopción de tecnologías que reduzcan costos.',
+    },
+    {
+      slug: 'acuerdo-infotep-capacitacion',
+      title: 'ONEC firma acuerdo con INFOTEP para capacitación técnica',
+      publishedAt: '2025-12-15',
+      category: 'Institucional',
+      body: 'Nuevo convenio permitirá a los empleados de empresas miembro acceder a programas de formación técnica y profesional.\n\nEl acuerdo entre ONEC e INFOTEP establece un marco de colaboración para el desarrollo de programas de capacitación adaptados a las necesidades del sector comercial.\n\nLos programas incluirán formación en áreas como servicio al cliente, gestión de inventarios, comercio digital y habilidades gerenciales.',
+    },
+  ]
+
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }))
+}
+
+interface Props {
+  article: {
+    title: string
+    publishedAt: string
+    category?: string
+    body: string
+  }
+}
+
+const { article } = Astro.props
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.body.slice(0, 160)}
+  article={true}
+  publishedAt={article.publishedAt}
+>
+  <Header />
+  <main class="min-h-screen">
+    <section class="pt-8 pb-4">
+      <Container>
+        <Breadcrumbs items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Noticias', href: '/noticias' },
+          { label: article.title },
+        ]} />
+      </Container>
+    </section>
+
+    <article class="py-8 pb-20">
+      <Container>
+        <div class="max-w-4xl mx-auto">
+          <ArticleContent
+            title={article.title}
+            publishedAt={article.publishedAt}
+            category={article.category}
+          />
+          <div class="prose prose-lg max-w-none mt-8">
+            {article.body.split('\n\n').map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

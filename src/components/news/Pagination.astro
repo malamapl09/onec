@@ -1,0 +1,110 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+function getPageUrl(page: number): string {
+  if (page === 1) return baseUrl;
+  const separator = baseUrl.includes('?') ? '&' : '?';
+  return `${baseUrl}${separator}pagina=${page}`;
+}
+
+// Build visible page numbers (max 5 with ellipsis)
+function getPageNumbers(): (number | '...')[] {
+  if (totalPages <= 5) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  const pages: (number | '...')[] = [1];
+
+  if (currentPage > 3) {
+    pages.push('...');
+  }
+
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  if (currentPage < totalPages - 2) {
+    pages.push('...');
+  }
+
+  pages.push(totalPages);
+  return pages;
+}
+
+const pageNumbers = getPageNumbers();
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < totalPages;
+---
+
+{totalPages > 1 && (
+  <nav class="flex items-center justify-center gap-1" aria-label="Paginación">
+    <!-- Previous -->
+    {hasPrev ? (
+      <a
+        href={getPageUrl(currentPage - 1)}
+        class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-charcoal-600 hover:bg-charcoal-100 transition"
+        aria-label="Página anterior"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+    ) : (
+      <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-charcoal-600/30 cursor-not-allowed">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </span>
+    )}
+
+    <!-- Page numbers -->
+    {pageNumbers.map((page) =>
+      page === '...' ? (
+        <span class="flex items-center justify-center w-10 h-10 text-charcoal-600 text-sm">
+          ...
+        </span>
+      ) : (
+        <a
+          href={getPageUrl(page)}
+          class:list={[
+            'flex items-center justify-center w-10 h-10 rounded-lg text-sm font-medium transition',
+            page === currentPage
+              ? 'bg-onec-red text-white'
+              : 'bg-white text-charcoal-600 hover:bg-charcoal-100',
+          ]}
+          aria-current={page === currentPage ? 'page' : undefined}
+        >
+          {page}
+        </a>
+      )
+    )}
+
+    <!-- Next -->
+    {hasNext ? (
+      <a
+        href={getPageUrl(currentPage + 1)}
+        class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-charcoal-600 hover:bg-charcoal-100 transition"
+        aria-label="Página siguiente"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    ) : (
+      <span class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-charcoal-600/30 cursor-not-allowed">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </span>
+    )}
+  </nav>
+)}

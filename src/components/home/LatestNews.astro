@@ -1,0 +1,86 @@
+---
+const articles = [
+  {
+    category: 'Sector Comercial',
+    slug: 'onec-mesa-dialogo-reforma-fiscal',
+    title: 'ONEC participa en mesa de diálogo sobre reforma fiscal',
+    excerpt: 'La organización presentó propuestas para proteger al sector comercial en las discusiones sobre la nueva legislación tributaria.',
+  },
+  {
+    category: 'Institucional',
+    slug: 'programa-capacitacion-2026',
+    title: 'Programa de capacitación en gestión empresarial 2026',
+    excerpt: 'ONEC anuncia su programa de capacitación para el primer semestre, con talleres en finanzas, marketing digital y recursos humanos.',
+  },
+  {
+    category: 'Eventos',
+    slug: 'jornada-vinculacion-ter-2026',
+    title: 'Exitosa jornada de vinculación comercial TER 2026',
+    excerpt: 'Más de 50 empresas participaron en la jornada de vinculación comercial, generando nuevas oportunidades de negocio.',
+  },
+];
+---
+
+<section class="py-20 bg-charcoal-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Heading -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal-950">
+        Últimas Noticias
+      </h2>
+      <p class="text-charcoal-600 text-lg mt-4 max-w-2xl mx-auto">
+        Mantente al día con las novedades del sector comercial
+      </p>
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {articles.map((article) => (
+        <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <!-- Image Placeholder -->
+          <div class="bg-charcoal-100 aspect-video flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-charcoal-300" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+            </svg>
+          </div>
+
+          <div class="p-6">
+            <!-- Category Badge -->
+            <span class="inline-block bg-onec-red-light text-onec-red text-xs font-semibold px-3 py-1 rounded-full mb-3">
+              {article.category}
+            </span>
+
+            <h3 class="font-heading font-semibold text-lg text-charcoal-950 leading-snug mb-2">
+              {article.title}
+            </h3>
+
+            <p class="text-sm text-charcoal-600 leading-relaxed mb-4">
+              {article.excerpt}
+            </p>
+
+            <div class="flex items-center justify-end">
+              <a
+                href={`/noticias/${article.slug}`}
+                class="text-onec-red text-sm font-semibold hover:text-onec-red-dark transition-colors inline-flex items-center gap-1"
+              >
+                Leer más
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Bottom link -->
+    <div class="text-center mt-14">
+      <a
+        href="/noticias"
+        class="inline-flex items-center gap-2 text-onec-red font-semibold hover:text-onec-red-dark transition-colors"
+      >
+        Ver todas las noticias
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>

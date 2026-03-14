@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@theme {
+  --color-onec-red: #d12626;
+  --color-onec-red-dark: #a81e1e;
+  --color-onec-red-light: #f5e0e0;
+
+  --color-charcoal-950: #1a1a1a;
+  --color-charcoal-900: #2d2d2d;
+  --color-charcoal-600: #666666;
+  --color-charcoal-100: #f5f5f5;
+  --color-charcoal-50: #fafafa;
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-onec-red);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-charcoal-950);
+  }
+}

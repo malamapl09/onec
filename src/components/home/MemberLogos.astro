@@ -1,0 +1,58 @@
+---
+---
+
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Heading -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal-950">
+        Nuestros Miembros
+      </h2>
+      <p class="text-charcoal-600 text-lg mt-4 max-w-2xl mx-auto">
+        Empresas líderes del comercio dominicano confían en ONEC
+      </p>
+    </div>
+
+    <!-- Member logo strips -->
+    <div class="space-y-4">
+      {[1, 2, 3, 4, 5, 6].map((n) => (
+        <img
+          src={`/images/miembros/ONEC-Miembros_${n}.png`}
+          alt="Miembros ONEC"
+          class="w-full h-auto"
+          loading="lazy"
+          width="1920"
+          height="500"
+          decoding="async"
+        />
+      ))}
+    </div>
+
+    <!-- Miembro Colaborador -->
+    <div class="mt-10 pt-8 border-t border-charcoal-200">
+      <p class="text-center text-sm font-medium text-charcoal-500 uppercase tracking-wider mb-4">
+        Miembro Colaborador
+      </p>
+      <img
+        src="/images/miembros/ONEC-Miembros_7.png"
+        alt="Miembro Colaborador ONEC"
+        class="w-full h-auto"
+        loading="lazy"
+        width="1920"
+        height="500"
+        decoding="async"
+      />
+    </div>
+
+    <!-- Bottom link -->
+    <div class="text-center mt-12">
+      <a
+        href="/membresia"
+        class="inline-flex items-center gap-2 text-onec-red font-semibold hover:text-onec-red-dark transition-colors"
+      >
+        Ver todos los miembros
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+---
+const events = [
+  {
+    year: '1997',
+    title: 'Fundación de ONEC',
+    description: 'Creada para representar los intereses del comercio organizado dominicano.',
+  },
+  {
+    year: '2003',
+    title: 'Expansión de servicios',
+    description: 'Incorporación de asesoría legal y fiscal para empresas miembro.',
+  },
+  {
+    year: '2010',
+    title: 'Plataforma TER',
+    description: 'Lanzamiento del programa de vinculación comercial con más de 556 conexiones.',
+  },
+  {
+    year: '2015',
+    title: 'Alianzas estratégicas',
+    description: 'Formalización de alianzas con el gobierno y organismos internacionales.',
+  },
+  {
+    year: '2020',
+    title: 'Transformación digital',
+    description: 'Adaptación de servicios y capacitaciones al entorno digital.',
+  },
+  {
+    year: '2024',
+    title: 'Consolidación',
+    description: 'Más de 100 empresas miembro en 7 sectores del comercio dominicano.',
+  },
+];
+---
+
+<div class="relative">
+  <!-- Center line -->
+  <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-charcoal-100"></div>
+
+  <div class="space-y-12">
+    {events.map((event, index) => (
+      <div class="relative">
+        <!-- Red dot -->
+        <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-onec-red rounded-full border-4 border-white z-10 mt-1"></div>
+
+        <!-- Card -->
+        <div
+          class:list={[
+            'ml-12 md:ml-0 md:w-[calc(50%-2rem)]',
+            index % 2 === 0 ? 'md:mr-auto md:pr-0' : 'md:ml-auto md:pl-0',
+          ]}
+        >
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <span class="text-onec-red font-heading font-bold text-2xl">{event.year}</span>
+            <h3 class="font-bold text-charcoal-950 mt-1">{event.title}</h3>
+            <p class="text-charcoal-600 text-sm mt-2">{event.description}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

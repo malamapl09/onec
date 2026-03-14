@@ -1,0 +1,108 @@
+---
+import PageLayout from '@layouts/PageLayout.astro'
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Breadcrumbs from '@components/global/Breadcrumbs.astro'
+import ArticleCard from '@components/news/ArticleCard.astro'
+import CategoryFilter from '@components/news/CategoryFilter.astro'
+import Pagination from '@components/news/Pagination.astro'
+
+// Placeholder data - will be replaced with Sanity queries
+const categories = [
+  { title: 'Institucional', slug: 'institucional' },
+  { title: 'Eventos', slug: 'eventos' },
+  { title: 'Sector Comercial', slug: 'sector-comercial' },
+  { title: 'Legislación', slug: 'legislacion' },
+]
+
+const articles = [
+  {
+    title: 'ONEC participa en mesa de diálogo sobre reforma fiscal',
+    excerpt: 'Representantes de ONEC participaron en la mesa de diálogo convocada por el Ministerio de Hacienda para discutir la propuesta de reforma fiscal.',
+    slug: 'onec-mesa-dialogo-reforma-fiscal',
+    date: '2026-03-01',
+    category: 'Institucional',
+  },
+  {
+    title: 'Exitosa jornada de vinculación comercial TER 2026',
+    excerpt: 'Más de 50 empresas participaron en la jornada de vinculación comercial, generando nuevas oportunidades de negocio entre proveedores y comercios.',
+    slug: 'jornada-vinculacion-ter-2026',
+    date: '2026-02-15',
+    category: 'Eventos',
+  },
+  {
+    title: 'Nuevas regulaciones para el comercio electrónico en RD',
+    excerpt: 'El gobierno dominicano aprobó nuevas regulaciones para el comercio electrónico que impactarán a las empresas del sector retail.',
+    slug: 'regulaciones-comercio-electronico-rd',
+    date: '2026-02-01',
+    category: 'Legislación',
+  },
+  {
+    title: 'Programa de capacitación en gestión empresarial 2026',
+    excerpt: 'ONEC anuncia su programa de capacitación para el primer semestre de 2026, con talleres en finanzas, marketing digital y recursos humanos.',
+    slug: 'programa-capacitacion-2026',
+    date: '2026-01-20',
+    category: 'Institucional',
+  },
+  {
+    title: 'Análisis del impacto de la inflación en el sector comercial',
+    excerpt: 'Nuestro equipo de expertos analiza el impacto de la inflación en los costos operativos del comercio dominicano y propone estrategias de mitigación.',
+    slug: 'impacto-inflacion-sector-comercial',
+    date: '2026-01-10',
+    category: 'Sector Comercial',
+  },
+  {
+    title: 'ONEC firma acuerdo con INFOTEP para capacitación técnica',
+    excerpt: 'Nuevo convenio permitirá a los empleados de empresas miembro acceder a programas de formación técnica y profesional.',
+    slug: 'acuerdo-infotep-capacitacion',
+    date: '2025-12-15',
+    category: 'Institucional',
+  },
+]
+
+const activeCategory = Astro.url.searchParams.get('categoria') || undefined
+const currentPage = 1
+const totalPages = 1
+---
+
+<PageLayout
+  title="Noticias"
+  description="Últimas noticias y novedades del sector comercial dominicano. Mantente informado con ONEC."
+>
+  <section class="pt-8 pb-4">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Noticias' }]} />
+    </Container>
+  </section>
+
+  <section class="py-16">
+    <Container>
+      <SectionHeading
+        title="Noticias"
+        subtitle="Mantente al día con las novedades del sector comercial dominicano"
+      />
+
+      <div class="mt-8">
+        <CategoryFilter categories={categories} activeCategory={activeCategory} />
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {articles.map((article) => (
+          <ArticleCard
+            title={article.title}
+            excerpt={article.excerpt}
+            slug={article.slug}
+            date={article.date}
+            category={article.category}
+          />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div class="mt-12">
+          <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/noticias" />
+        </div>
+      )}
+    </Container>
+  </section>
+</PageLayout>

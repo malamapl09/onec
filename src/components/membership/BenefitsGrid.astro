@@ -1,0 +1,78 @@
+---
+const primaryBenefits = [
+  {
+    title: 'Monitoreo Permanente',
+    description: 'Monitoreo permanente de aspectos que puedan impactar al sector comercial.',
+    icon: '/images/iconos/Icono-Monitoreo.png',
+  },
+  {
+    title: 'Enlace Institucional',
+    description: 'Enlace y mesas de trabajo mixtas con el sector público y privado.',
+    icon: '/images/iconos/Icono-Enlace.png',
+  },
+  {
+    title: 'Vinculación Comercial',
+    description: 'Servicio de vinculación comercial y conexión con el tejido empresarial.',
+    icon: '/images/iconos/Icono-TER.png',
+  },
+  {
+    title: 'Foros y Capacitación',
+    description: 'Foros y actividades académicas para el desarrollo profesional.',
+    icon: '/images/iconos/Icono-Calendario.png',
+  },
+  {
+    title: 'Networking',
+    description: 'Actividades de networking entre los asociados.',
+    icon: '/images/iconos/Icono-Networking.png',
+  },
+  {
+    title: 'Boletín Informativo',
+    description: 'Suscripción al boletín mensual de noticias de ONEC.',
+    icon: '/images/iconos/Icono-Boletín.png',
+  },
+];
+
+const additionalBenefits = [
+  'Representación Gremial — Intermediación con el sector gubernamental y legislativo para resolver temas del comercio.',
+  'Comités de Trabajo — Derecho de participar en los comités de trabajo de ONEC.',
+  'Plataforma TER — Derecho de participar en la plataforma de Talento en el Retail.',
+  'Grupo de WhatsApp — Inclusión en grupo de WhatsApp de miembros para socializar informaciones importantes.',
+  'Desayunos Temáticos — Desayunos temáticos de ONEC.',
+  'Descuentos en Eventos — Descuentos en patrocinios y eventos ONEC.',
+];
+---
+
+<div>
+    <!-- Primary benefits grid with icons -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {primaryBenefits.map((benefit) => (
+        <div class="bg-white rounded-xl p-6 shadow-sm">
+          <div class="w-12 h-12 mb-4">
+            <img
+              src={benefit.icon}
+              alt={benefit.title}
+              class="w-12 h-12 object-contain"
+              loading="lazy"
+              width="48"
+              height="48"
+            />
+          </div>
+          <h3 class="font-bold text-charcoal-950">{benefit.title}</h3>
+          <p class="text-charcoal-600 text-sm mt-2">{benefit.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Additional benefits list -->
+    <div class="mt-12">
+      <h3 class="text-lg font-heading font-bold text-charcoal-950 mb-6">Beneficios adicionales</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+        {additionalBenefits.map((benefit) => (
+          <div class="flex items-start gap-3">
+            <span class="mt-1 flex-shrink-0 w-2 h-2 rounded-full bg-onec-red"></span>
+            <p class="text-charcoal-700 text-sm">{benefit}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+</div>

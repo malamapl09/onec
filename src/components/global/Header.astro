@@ -1,0 +1,67 @@
+---
+import MobileMenu from '@components/global/MobileMenu.astro';
+import { navLinks } from '@data/navigation';
+
+const pathname = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <nav aria-label="Navegación principal" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/">
+        <img src="/images/onec-logo.png" alt="ONEC - Organización Nacional de Empresas Comerciales" class="h-10 w-auto" width="160" height="40" />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-8">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class:list={[
+              'text-sm font-medium transition-colors',
+              isActive(link.href)
+                ? 'text-onec-red font-semibold'
+                : 'text-charcoal-600 hover:text-onec-red',
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Desktop CTA -->
+      <div class="hidden lg:block">
+        <a
+          href="/membresia"
+          class="bg-onec-red text-white rounded-lg px-5 py-2.5 text-sm font-semibold hover:bg-onec-red-dark transition-colors"
+        >
+          Hazte Miembro
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        id="hamburger-btn"
+        type="button"
+        class="lg:hidden inline-flex items-center justify-center p-2.5 min-h-11 min-w-11 rounded-md text-charcoal-600 hover:text-charcoal-950 hover:bg-charcoal-100 transition-colors"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <MobileMenu navLinks={navLinks} pathname={pathname} />
+</header>

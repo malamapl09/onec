@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  publishedAt: string;
+  category?: string;
+  coverImage?: any;
+}
+
+const { title, publishedAt, category, coverImage } = Astro.props;
+
+const formattedDate = new Date(publishedAt).toLocaleDateString('es-DO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="max-w-3xl mx-auto">
+  <!-- Article header -->
+  <header class="mb-10">
+    {category && (
+      <span class="inline-block bg-onec-red-light text-onec-red text-xs font-semibold px-3 py-1 rounded-full mb-4">
+        {category}
+      </span>
+    )}
+
+    <h1 class="text-3xl md:text-4xl font-heading font-bold text-charcoal-950 leading-tight">
+      {title}
+    </h1>
+
+    <time class="block text-charcoal-600 text-sm mt-4" datetime={publishedAt}>
+      {formattedDate}
+    </time>
+
+    <!-- Cover image -->
+    {coverImage ? (
+      <div class="mt-8 rounded-xl overflow-hidden">
+        <img
+          src={typeof coverImage === 'string' ? coverImage : coverImage.url}
+          alt={title}
+          class="w-full aspect-video object-cover"
+        />
+      </div>
+    ) : (
+      <div class="mt-8 rounded-xl overflow-hidden bg-charcoal-100 aspect-video flex items-center justify-center">
+        <svg class="w-16 h-16 text-charcoal-600/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+        </svg>
+      </div>
+    )}
+  </header>
+
+  <!-- Article body (Portable Text via slot) -->
+  <div class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-charcoal-950 prose-a:text-onec-red prose-a:no-underline hover:prose-a:underline prose-p:text-charcoal-600 prose-li:text-charcoal-600 prose-strong:text-charcoal-950">
+    <slot />
+  </div>
+</article>
