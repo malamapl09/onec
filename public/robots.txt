@@ -1,7 +1,9 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-Disallow: /admin
-Disallow: /api/
-
-Sitemap: https://onec.org.do/sitemap-index.xml
+# Uncomment below when ready to go live:
+# User-agent: *
+# Allow: /
+# Disallow: /admin
+# Disallow: /api/
+# Sitemap: https://onec.org.do/sitemap-index.xml
